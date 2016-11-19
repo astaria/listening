@@ -1,0 +1,27 @@
+{
+  "name": "listen",
+  "description": "Listening web app",
+  "main": "main.js",
+  "authors": [
+    "Janet jeffus <jjeffus@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "html5shiv": "^3.7.3"
+  },
+  "devDependencies": {
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2"
+  }
+}

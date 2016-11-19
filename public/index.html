@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Listening</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="./bootstrap.min.css" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
+      <script src="../bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">Listen</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
+            <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+
+      <div class="bs-docs-section clearfix">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Panels</h2>
+            <p><input type="button" value="Start" name="record" id="record" /></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/recordrtc/RecordRTC.min.js"></script>
+    <!-- <script src="assets/js/custom.js"></script> -->
+    <script>
+      function startRecording() {
+        var session = {
+            audio: true,
+            video: false
+        };
+        window.recordRTC = null;
+        navigator.getUserMedia(session, function (mediaStream) {
+            window.recordRTC = RecordRTC(mediaStream);
+            window.recordRTC.startRecording();
+          console.log("magick");
+          }, function(err) {
+          console.log(err);
+        });
+      }
+      function stopRecording() {
+        window.recordRTC.stopRecording(function(audioURL) {
+          var formData = new FormData();
+          formData.append('recording[audio]', window.recordRTC.getBlob())
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/recording/record',
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            error: function(err) {
+              console.log("error", err);
+            }
+          })
+        });
+      }
+      $(document).ready(function() {
+        $('#record').click(function(){
+          if ($('#record').attr('value') == 'Start') {
+            startRecording();
+            console.log("recording_started");
+            $('#record').attr('value', 'Stop')
+          } else {
+            stopRecording();
+            $('#record').attr('value', 'Start')
+            console.log("recording_stopped");
+          }
+        });
+      });
+    </script>
+
+</html>
