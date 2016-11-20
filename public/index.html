@@ -1,100 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Listening</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="./bootstrap.min.css" media="screen">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
-      <script src="../bower_components/respond/dest/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="#" class="navbar-brand">Listen</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+      <title>Button Switches with Checkboxes and CSS3 Fanciness</title>
+      <meta name="description" content="CSS Button Switches with Checkboxes and CSS3 Fanciness" />
+      <meta name="keywords" content="css3, css-only, buttons, switch, checkbox, toggle, web design, web development" />
+      <meta name="author" content="Codrops" />
+      <link rel="shortcut icon" href="../favicon.ico"> 
+      <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css' />
+    </head>
+    <body>
+        <div class="container">
+
+          <img src="maura.svg" id="maura" />
+<span class="switch">
+	<span class="switch-border1">
+		<span class="switch-border2">
+			<input id="recording" type="checkbox" />
+			<label for="recording"></label>
+			<span class="switch-top"></span>
+			<span class="switch-shadow"></span>
+			<span class="switch-handle"></span>
+			<span class="switch-handle-left"></span>
+			<span class="switch-handle-right"></span>
+			<span class="switch-handle-top"></span>
+			<span class="switch-handle-bottom"></span>
+			<span class="switch-handle-base"></span>
+			<span class="switch-led switch-led-green">
+				<span class="switch-led-border">
+					<span class="switch-led-light">
+						<span class="switch-led-glow"></span>
+					</span>
+				</span>
+			</span>
+			<span class="switch-led switch-led-red">
+				<span class="switch-led-border">
+					<span class="switch-led-light">
+						<span class="switch-led-glow"></span>
+					</span>
+				</span>
+			</span>
+		</span>
+	</span>
+</span>
+
+          <img src="listening.svg" id="listening"  />
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
-            <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
-          </ul>
+        <div class="notice">
+          Click the record button to vent anonymously. You agree to our <a href="tos.html">Terms and Conditions</a>.
         </div>
-      </div>
-    </div>
-
-
-    <div class="container">
-
-      <div class="bs-docs-section clearfix">
-        <div class="row">
-          <div class="col-lg-12">
-            <h2>Panels</h2>
-            <p><input type="button" value="Start" name="record" id="record" /></p>
-          </div>
+        <div class="copyright">
+          Copyright &copy; 2016 Maura Soden
         </div>
-      </div>
-
-    </div>
-
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/recordrtc/RecordRTC.min.js"></script>
-    <!-- <script src="assets/js/custom.js"></script> -->
-    <script>
-      function startRecording() {
-        var session = {
-            audio: true,
-            video: false
-        };
-        window.recordRTC = null;
-        navigator.getUserMedia(session, function (mediaStream) {
-            window.recordRTC = RecordRTC(mediaStream);
-            window.recordRTC.startRecording();
-          console.log("magick");
-          }, function(err) {
-          console.log(err);
-        });
-      }
-      function stopRecording() {
-        window.recordRTC.stopRecording(function(audioURL) {
-          var formData = new FormData();
-          formData.append('recording[audio]', window.recordRTC.getBlob())
-          $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/recording/record',
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
-            error: function(err) {
-              console.log("error", err);
-            }
-          })
-        });
-      }
-      $(document).ready(function() {
-        $('#record').click(function(){
-          if ($('#record').attr('value') == 'Start') {
-            startRecording();
-            console.log("recording_started");
-            $('#record').attr('value', 'Stop')
-          } else {
-            stopRecording();
-            $('#record').attr('value', 'Start')
-            console.log("recording_stopped");
-          }
-        });
-      });
-    </script>
-
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/binaryjs/0.2.1/binary.min.js"></script>
+        <script src="recorder.js"></script>
+    </body>
 </html>
